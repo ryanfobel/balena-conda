@@ -1,8 +1,5 @@
 FROM balenalib/%%BALENA_MACHINE_NAME%%-python:3.7-build as buildstep
 
-# Set our working directory
-WORKDIR /usr/src/app
-
 RUN pip install wheel
 
 COPY ./requirements.txt requirements.txt
@@ -20,22 +17,19 @@ RUN install_packages wget && \
 # Add conda to the path
 ENV PATH /root/miniforge3/bin:$PATH
 
-# Set our working directory
-WORKDIR /usr/src/app
-
 # Install conda packages described by the enviroment.yml file on the balena.io build server
 COPY ./environment.yml .
-RUN conda env update --file environment.yml
+RUN conda env update --file environment.yml && rm environment.yml
 
 # Copy python wheels built in the previous stage
 COPY --from=buildstep /tmp/wheels /tmp/wheels
 
 # Install non-conda packages as pip wheels
 COPY ./requirements.txt requirements.txt
-RUN pip install --no-index --find-links=/tmp/wheels -r requirements.txt && rm -rf /tmp/wheels
+RUN pip install --no-index --find-links=/tmp/wheels -r requirements.txt && rm -rf /tmp/wheels && rm requirements.txt
 
 # Run post_install script
 COPY ./post_install.sh .
-RUN chmod 755 post_install.sh && ./post_install.sh
+RUN chmod 755 post_install.sh && ./post_install.sh && rm post_install.sh
 
 CMD bash
