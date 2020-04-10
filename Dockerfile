@@ -1,3 +1,15 @@
+FROM balenalib/raspberrypi4-64-python:3.7-build as buildstep
+
+# Set our working directory
+WORKDIR /usr/src/app
+
+RUN pip install wheel
+
+COPY ./requirements.txt requirements.txt
+
+# Build pip wheels for non-conda packages
+RUN mkdir /tmp/wheels && pip wheel -w /tmp/wheels -r requirements.txt
+
 FROM balenalib/raspberrypi4-64
 
 RUN install_packages wget && \
@@ -11,14 +23,19 @@ ENV PATH /root/miniforge3/bin:$PATH
 # Set our working directory
 WORKDIR /usr/src/app
 
-COPY ./environment.yml .
-
 # Install conda packages described by the enviroment.yml file on the balena.io build server
+COPY ./environment.yml .
 RUN conda env update --file environment.yml
 
-COPY ./post_install.sh .
+# Copy python wheels built in the previous stage
+COPY --from=buildstep /tmp/wheels /tmp/wheels
+
+# Install non-conda packages as pip wheels
+COPY ./requirements.txt requirements.txt
+RUN pip install --no-index --find-links=/tmp/wheels -r requirements.txt && rm -rf /tmp/wheels
 
 # Run post_install script
+COPY ./post_install.sh .
 RUN chmod 755 post_install.sh && ./post_install.sh
 
 CMD bash
