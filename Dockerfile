@@ -16,4 +16,9 @@ COPY ./environment.yml .
 # Install conda packages described by the enviroment.yml file on the balena.io build server
 RUN conda env update --file environment.yml
 
+COPY ./post_install.sh .
+
+# Run post_install script
+RUN chmod 755 post_install.sh && ./post_install.sh
+
 CMD bash
