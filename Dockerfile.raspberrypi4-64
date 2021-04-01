@@ -31,5 +31,3 @@ RUN pip install --no-index --find-links=/tmp/wheels -r requirements.txt && rm -r
 # Run post_install script
 COPY ./post_install.sh .
 RUN chmod 755 post_install.sh && ./post_install.sh && rm post_install.sh
-
-CMD bash
