@@ -1,8 +1,8 @@
 # balena-conda
 
-This is a balena image for Raspberry Pi 4-64bit OS with a basic conda environment. It may be useful to anyone wanting to setup a Python data science stack (e.g., numpy, scipy, jupyter, matplotlib, pandas, etc.) on the Raspberry Pi4.
+This is a [Raspberry Pi] 4-64bit [balena] image with a basic [conda]/[miniforge] environment. It provides access to the standard [Python] data science stack (e.g., numpy, scipy, jupyter, matplotlib, pandas, etc.) and libaries for interacting with the [Raspberry Pi] hardware (e.g., smbus2, RPi.GPIO, adafruit-blinka) on the [Raspberry Pi] 4.
 
-# Build Instructions
+## Build Instructions
 
 1. Build the docker image on the RPi at the given IP address
 
@@ -49,3 +49,17 @@ balena-conda_main                 latest    0e4e4314354f   2 hours ago   1.62GB
 ```sh
 >docker push ryanfobel/raspberrypi4-64-conda
 ```
+
+## Use this as a base image for your own balena `Dockerfile`
+
+Include the following line at the top of your `Dockerfile`:
+
+```
+FROM ryanfobel/raspberrypi4-64-conda
+```
+
+[Raspberry Pi]: https://www.raspberrypi.org
+[balena]: https://www.balena.io
+[conda]: https://conda.io
+[miniforge]: https://github.com/conda-forge/miniforge
+[Python]: https://www.python.org/
