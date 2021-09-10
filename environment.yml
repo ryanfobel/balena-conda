@@ -6,7 +6,14 @@ dependencies:
   - jupyterlab
   - numpy
   - pandas
+  - matplotlib
   - ipywidgets
   - nodejs
-  - mamba
+  - pyusb
+  - pyserial
+  - pyftdi
+  - smbus2
+  - paho-mqtt
+  - json_tricks
+  - blinker
 prefix: /root/miniforge3
