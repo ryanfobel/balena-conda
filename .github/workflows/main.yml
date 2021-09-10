@@ -1,0 +1,25 @@
+on:
+  push:
+    # Only run workflow for pushes to specific branches
+    branches:
+      - balena-build
+
+jobs:
+  balena-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Balena build docker image
+        uses: bekriebel/balena-cli-action@v1
+        if: success()
+        with:
+          balena_api_token: ${{secrets.BALENA_API_TOKEN}}
+          balena_command: "build --deviceType raspberrypi4-64 --arch aarch64 --emulated"
+          balena_secrets: |
+            {
+              "docker.pkg.github.com": {
+                "username": "${{ secrets.MY_GITHUB_USER }}",
+                "password": "${{ secrets.MY_GITHUB_TOKEN }}"
+              }
+            }
