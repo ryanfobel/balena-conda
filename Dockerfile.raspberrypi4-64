@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi4-64-python:3.8-build as buildstep
+FROM balenalib/raspberrypi4-64-python:3.9-build as buildstep
 
 RUN pip install wheel
 

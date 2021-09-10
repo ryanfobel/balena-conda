@@ -1,6 +1,6 @@
 # balena-conda
 
-This is a [Raspberry Pi] 4-64bit [balena] image with a basic [conda]/[miniforge] environment. It provides access to the standard [Python] data science stack (e.g., numpy, scipy, jupyter, matplotlib, pandas, etc.) and libaries for interacting with the [Raspberry Pi] hardware (e.g., smbus2, RPi.GPIO, adafruit-blinka) on the [Raspberry Pi] 4.
+This is a [Raspberry Pi] 4-64bit [balena] image with a basic [conda]/[miniforge] environment. It provides access to the standard [Python] data science stack (e.g., numpy, jupyter, matplotlib, pandas, etc.) and libaries for interacting with the [Raspberry Pi] hardware (e.g., smbus2, RPi.GPIO, adafruit-blinka, pyusb, pyserial, pyftdi) on the [Raspberry Pi] 4.
 
 ## Build Instructions
 
